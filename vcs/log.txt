@@ -1,0 +1,7 @@
+commit d7ab469a240e932a51fe4e22f4d3ab308fb8b5a52c960b800ab3409f462d4143
+Author: John
+Changed several lines of code in the file2.txt
+
+commit c5d1e9e4e3a724fd5edd64ed68c640263fe17aab3598299f15525255fcb4b15
+Author: John
+Added several lines of code to the file1.txt
