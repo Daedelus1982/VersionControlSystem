@@ -30,7 +30,7 @@ fun main(args: Array<String>) {
         "add" -> println(add(arg1, indexFile))
         "log" -> println(log(logFile))
         "commit" -> println(commit(arg1?.substring(0, arg1.length), indexFile, logFile, configFile.readText()))
-        "checkout" -> println("Restore a file.")
+        "checkout" -> println(checkout(arg1, logFile))
         else -> println("'${args[0]}' is not a SVCS command.")
     }
 }
@@ -122,4 +122,15 @@ fun log(logFile: File): String {
     if (logItems.isEmpty()) return "No commits yet."
 
     return logItems.joinToString("\n\n") { it.toString() }.trim()
+}
+
+fun checkout(hash: String?, logFile: File): String {
+    if (hash.isNullOrEmpty()) return "Commit id was not passed."
+
+    getLogItems(logFile).firstOrNull { it.checksum == hash } ?: return "Commit does not exist."
+
+    val files = File("vcs/commits/$hash").listFiles()
+    files?.forEach { it.copyTo(File(it.name), overwrite = true) }
+
+    return "Switched to commit $hash."
 }
